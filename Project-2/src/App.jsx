@@ -1,13 +1,16 @@
 import { useState } from "react";
 import StartGame from "./components/StartGame";
+import Home from "./components/Home";
 
 function App() {
-  const [count, setCount] = useState(0);
+  const [isGameStarted, setIsGameStarted] = useState(false);
+
+  const toggleGamePlay = () => {
+    setIsGameStarted((prev) => !prev);
+  };
 
   return (
-    <>
-      <StartGame />
-    </>
+    <>{isGameStarted ? <Home /> : <StartGame toggle={toggleGamePlay} />}</>
   );
 }
 
