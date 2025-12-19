@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
 import NavBar from "./components/NavBar";
 import { CiSearch } from "react-icons/ci";
 import { CiCirclePlus } from "react-icons/ci";
@@ -8,9 +8,13 @@ import { db } from "./config/firebase";
 import { RiEditCircleLine } from "react-icons/ri";
 import { IoMdTrash } from "react-icons/io";
 import ContactCard from "./components/ContactCard";
+import Modal from "./components/Modal";
+import AddAndUpdateContact from "./components/AddAndUpdateContact";
+import useDisclose from "./hooks/useDisclose";
 
 function App() {
   const [contacts, setContacts] = useState([]);
+  const { isOpen, onClose, onOpen } = useDisclose();
 
   useEffect(() => {
     const getContacts = async () => {
@@ -44,7 +48,10 @@ function App() {
             />
           </div>
 
-          <CiCirclePlus className="text-5xl text-black bg-white rounded-3xl cursor-pointer" />
+          <CiCirclePlus
+            onClick={onOpen}
+            className="text-5xl text-black bg-white rounded-3xl cursor-pointer"
+          />
         </div>
         <div className="mt-4 flex flex-col gap-3">
           {contacts.map((contact) => (
@@ -52,8 +59,11 @@ function App() {
           ))}
         </div>
       </div>
+      <AddAndUpdateContact onClose={onClose} isOpen={isOpen} />
     </>
   );
 }
 
 export default App;
+
+// 1:15:20 ma aaxu ma
