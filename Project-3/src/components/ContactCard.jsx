@@ -6,6 +6,7 @@ import { RiEditCircleLine } from "react-icons/ri";
 import { db } from "../config/firebase";
 import AddAndUpdateContact from "./AddAndUpdateContact";
 import useDisclose from "../hooks/useDisclose";
+import { toast } from "react-toastify";
 
 function ContactCard({ contact }) {
   const { isOpen, onClose, onOpen } = useDisclose();
@@ -13,6 +14,7 @@ function ContactCard({ contact }) {
   const deleteContact = async (id) => {
     try {
       await deleteDoc(doc(db, "contacts", id));
+      toast.success("Contact Deleted Succesfully");
     } catch (error) {
       console.log(error);
     }

@@ -11,6 +11,8 @@ import ContactCard from "./components/ContactCard";
 import Modal from "./components/Modal";
 import AddAndUpdateContact from "./components/AddAndUpdateContact";
 import useDisclose from "./hooks/useDisclose";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   const [contacts, setContacts] = useState([]);
@@ -33,7 +35,16 @@ function App() {
       }
     };
     getContacts();
-  });
+  }, []);
+
+  const filterContacts = (e) => {
+    const value = e.target.value;
+    const filteredContacts = contacts.filter((contact) =>
+      contact.name.toLowerCase().includes(value.toLowerCase())
+    );
+    setContacts(filteredContacts);
+    return filteredContacts;
+  };
 
   return (
     <>
@@ -43,6 +54,7 @@ function App() {
           <div className="flex relative items-center grow">
             <CiSearch className="text-white text-3xl absolute ml-1" />
             <input
+              onChange={filterContacts}
               type="text"
               className=" border bg-transparent border-white rounded-md h-10 grow text-white pl-9"
             />
@@ -60,10 +72,9 @@ function App() {
         </div>
       </div>
       <AddAndUpdateContact onClose={onClose} isOpen={isOpen} />
+      <ToastContainer position="bottom-center" />
     </>
   );
 }
 
 export default App;
-
-// 1:15:20 ma aaxu ma
